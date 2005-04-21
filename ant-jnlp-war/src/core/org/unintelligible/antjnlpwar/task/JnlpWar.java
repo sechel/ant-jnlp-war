@@ -10,6 +10,7 @@ import java.io.FileFilter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.FileScanner;
@@ -19,6 +20,7 @@ import org.apache.tools.ant.taskdefs.SignJar;
 import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Description;
 import org.unintelligible.antjnlpwar.datatype.Icon;
+import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.generation.Generator;
 import org.unintelligible.antjnlpwar.util.StreamUtil;
 
@@ -283,6 +285,20 @@ public class JnlpWar extends BaseJnlpWar {
 		}
 		if (getApplication() == null) {
 			throw new BuildException("The application element is required");
+		}
+		if(getJ2ses().size()==0){
+			addJ2se(new J2se());
+		}
+		//check required attributes in subelements
+		List icons=getIcons();
+		for (int i=0;i <icons.size(); i++){
+			Icon icon=(Icon)icons.get(i);
+			if(icon.getFile()==null){
+				throw new BuildException("The file attribute of the icon element is required");
+			}
+		}
+		if(getApplication().getJar()==null){
+			throw new BuildException("The jar attribute of the application element is required");
 		}
 	}
 
