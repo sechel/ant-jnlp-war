@@ -2,7 +2,7 @@
 	<description>Build file for the Ant JnlpWar task</description>
 
 	<property environment="env"/>
-	<property name="src" location="src"/>
+	<property name="src" location="src/core"/>
 	<property name="build" location="build"/>
 	<property name="dist"  location="dist"/>
 	<property name="javadoc" location="doc/javadoc"/>
@@ -29,8 +29,8 @@
 
 	<target name="dist" depends="compile" description="generate the distribution" >
 			<!-- add the templates -->
-			<copy todir="build">
-				<fileset dir="src">
+			<copy todir="${build}">
+				<fileset dir="${src}">
 					<include name="**/*.vm" />
 					<include name="**/*.jar" />
 					<include name="**/*.xml" />
@@ -42,8 +42,8 @@
 	
 	<target name="dist-dep" depends="compile" description="generate the distribution, includingg run-time dependencies, packed as a single jar" >
 			<!-- add the templates -->
-			<copy todir="build">
-				<fileset dir="src">
+			<copy todir="${build}">
+				<fileset dir="${src}">
 					<include name="**/*.vm" />
 					<include name="**/*.jar" />
 					<include name="**/*.xml" />
