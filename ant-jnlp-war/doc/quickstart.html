@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<title>Further Information</title>
+		<link href="css/main.css" rel="Stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Installation</h1>
+		<ul>
+			<li>Download the Ant Web Start Task</li>
+			<li>Either:</li>
+				<ul>
+					<li>Copy the ant-jnlp-war-XX.jar file to your ANT_HOME/lib folder</li>
+					<li>Declare the task in your buildfile as follows: <br/>
+						<code>
+						&lt;project default="run" <b>xmlns:jw="org.unintelligible.antjnlpwar"</b>&gt;<br/>
+						<b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&lt;typedef resource="org/unintelligible/antjnlpwar/antjnlpwar.xml" format="xml" uri="org.unintelligible.antjnlpwar"/&gt;<br/>
+						</b>
+						&lt;project&gt;<br/>
+						</code>
+					</li>
+				</ul>
+			<li>Or:</li>
+				<ul>
+					<li>Copy the ant-jnlp-war-XX.jar file to another location on your hard disk</li>
+					<li>Declare the task in your buildfile as follows: <br/>
+						<code>
+						&lt;project <b>xmlns:jw="org.unintelligible.antjnlpwar"</b>&gt;<br/>
+						<b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&lt;typedef resource="org/unintelligible/antjnlpwar/antjnlpwar.xml" format="xml" uri="org.unintelligible.antjnlpwar"&gt;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;classpath&gt;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pathelement location="/path/to/ant-jnlp-war-XX.jar"/&gt;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/classpath&gt;<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/typedef&gt;<br/>
+						</b>
+						&lt;project&gt;<br/>
+						</code>
+					</li>
+				</ul>
+		</ul>
+		<h1>Usage</h1>
+		<p>
+		Sample build file (taken from the example-build.xml file in the /doc folder of the source):
+		</p>
+		<p>
+		<code>
+&lt;project default="run" xmlns:jw="org.unintelligible.antjnlpwar"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;typedef resource="org/unintelligible/antjnlpwar/antjnlpwar.xml" format="xml" uri="org.unintelligible.antjnlpwar"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;target name="run"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:jnlpwar<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofile="dist/myApplicationName.war"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codebase="http://www.whatever.com/myApplicationName"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Application Name"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vendor="Vendor Name Goes Here"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack200="true"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signStorepass="myJavaCertificationStorePassword"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signAlias="myJavaCertificationAlias"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:description&gt;This is the descriptive text for the product&lt;/jw:description&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:description kind="short"&gt;This is a short descriptive text for the product&lt;/jw:description&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:icon file="path/to/icon.jpg"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:icon kind="splash" file="path/to/splash.jpg"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:j2se minVersion="1.4" args="-Xmx250M"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:j2seProperty name="MyApplicationProperty" value="myApplicationPropertyValue"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/jw:j2se&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;lib dir="path/to/application/lib/folder"&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include name="**/*.jar"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/lib&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:application mainclass="my.application.MainClass" jar=".path/to/application.jar"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/jw:jnlpwar&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/target&gt;<br/>
+&lt;/project&gt;
+		</code>
+		</p>
+		<!-- 
+		<p>Explanation:
+		<ul>
+			<li>remember to declare the <code>xmlns:jw="org.unintelligible.antjnlpwar"</code> namespace in your project definition</li>
+			<li>declare the </li>
+		</ul>
+		</p>
+		 -->
+	</body>
+</html>
+	

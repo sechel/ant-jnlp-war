@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>Further Information</title>
+		<link href="css/main.css" rel="Stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>General</h1>
+		<ul>
+			<li><a href="#1">What JNLP functionality does Ant Web Start Task lack?</a></li>
+		</ul>
+		<h1>Known issues</h1>
+		<ul>
+			<li><a href="#2">How does versioning work in the Ant Web Start Task?</a></li>
+		</ul>
+		<h1>FAQ Answers</h1>	
+		<p>
+		<a name="1"><h2>What JNLP functionality does Ant Web Start Task lack?</h2></a>
+		Ant Web Start Task is meant to be a quick and easy way to get an application distributed via webstart; in striving for simplicity, it also loses some of the power offered by the full JNLP spec. Some of these shortcomings are:
+		<ul>
+			<li>OS, locale -specific information and resouces: The JNLP spec allows the developer to specify information (such as application home page, etc...) and resources (jars) on a per-locale or per-OS basis. The Ant Web Start Task does allow native libraries to be specified on a per-os basis; other than that, all resources and information sections are generic.</li>
+			<li>J2SE: The JNLP spec allows fine-grained detailing of J2SE versions and allows properties and arguments to be defined accordingly. The Ant Web Start Task only allows J2SE version to be specified by major versions.</li>
+		</ul>
+		<a href="mailto:zcrar70@users.sourceforge.net?subject=Missing items from the list of JNLP elements ant-jnlp-war doesn't support (in the documentation FAQ)">Let us know</a> if there's any we've missed.
+		</p>
+		
+		
+		<p>
+		<a name="2"><h2>How does versioning work in the Ant Web Start Task?</h2></a>
+		One of the main advantages of Java Web Start is the ability to version jar files, allowing users to only download thoses jars that have changed. Versioning support in the Ant Web Start Task is pretty minimal; the original timestamp of the jar file is preserved in the WAR archive, which means that the client Web Start deployer will decide whether a user's jars need updating based on its timestamp. This is not very convenient for multi-developer environments where more than one developer can create and deploy the WAR archive.
+		<br/><br/>
+		Moreover, the Ant Web Start Task does not keep older versions of updated jars, and so jar-diffing is not supported. There are no plans to support this in the future, so if you need this kind of functionality, you would be better off rolling out your own custom JNLP file and application archive and maintaining them manually.
+	</body>
+</html>

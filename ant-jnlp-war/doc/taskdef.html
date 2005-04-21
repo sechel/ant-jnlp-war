@@ -1,0 +1,223 @@
+<html>
+	<head>
+		<title>Further Information</title>
+		<link href="css/main.css" rel="Stylesheet" type="text/css"/>
+	</head>
+	<body>
+		<h1>Parameters</h1>
+		<table border="1" cellpadding="2" cellspacing="0">
+		  <tr>
+		    <th><b>Attribute</b></th>
+			<th><b>Description</b></th>
+		    <th align="center">Required</th>
+		  </tr>
+		  <tr>
+		    <td>tofile</td>
+		    <td>The destination WAR file</td>
+		    <td align="center">Yes</td>
+		  </tr>
+		   <tr>
+		    <td>codebase</td>
+		    <td>The url to which the WAR file will be deployed</td>
+		    <td align="center">Yes</td>
+		  </tr>
+		  <tr>
+		    <td>title</td>
+		    <td>A descriptive title for the application</td>
+		    <td align="center">No (A default will be used)</td>
+		  </tr>
+		  <tr>
+		    <td>vendor</td>
+		    <td>A descriptive vendor name</td>
+		    <td align="center">No (A default will be used)</td>
+		  </tr>
+		  <tr>
+		    <td>homepage</td>
+		    <td>The application home page (containing information about the application)</td>
+		    <td align="center">No</td>
+		  </tr>
+		  <tr>
+		    <td>offline-allowed</td>
+		    <td><code>true|false</code> Whether or not the application can be launched offline</td>
+		    <td align="center">No (defaults to <code>true</code>)</td>
+		  </tr>
+		  <tr>
+		    <td>all-permission</td>
+		    <td><code>true|false</code> Whether or not the application requires full access to the machine</td>
+		    <td align="center">No (defaults to <code>true</code>)</td>
+		  </tr>
+		   <tr>
+		    <td>pack200</td>
+		    <td><code>true|false</code> Whether or not to provide pack200 versions of the application jars.</td>
+		    <td align="center">No (defaults to <code>false</code>)</td>
+		  </tr>
+		  <tr>
+		    <td>signAlias</td>
+		    <td>The alias to use when signing the jars (ie the name of the key to be used)</td>
+		    <td align="center">No</td>
+		  </tr>
+		  <tr>
+		    <td>signStorepass</td>
+		    <td>The password to access the keystore (used to sign jars)</td>
+		    <td align="center">No</td>
+		  </tr>
+  </tr>
+  </table>
+  <h1>Parameters specified as nested elements</h1>
+  <h2>Application</h2>
+    <p>The application descriptor. This element is required.</p>
+	  <table border="1" cellpadding="2" cellspacing="0">
+			  <tr>
+			    <th><b>Attribute</b></th>
+				<th><b>Description</b></th>
+			    <th align="center">Required</th>
+			  </tr>
+			  <tr>
+			    <td>jar</td>
+			    <td>The application jar file</td>
+			    <td align="center">Yes</td>
+			  </tr>
+			    <td>mainclass</td>
+			    <td>The application main class</td>
+			    <td align="center">No</td>
+			  </tr>
+		</table>
+  <h2>Description</h2>
+  <p>Descriptions for the current application</p>
+  <table border="1" cellpadding="2" cellspacing="0">
+		  <tr>
+		    <th><b>Attribute</b></th>
+			<th><b>Description</b></th>
+		    <th align="center">Required</th>
+		  </tr>
+		  <tr>
+		    <td>kind</td>
+		    <td><code>one-line|short|tooltip</code></td>
+		    <td align="center">No (if not specified, the default is used)</td>
+		  </tr>
+	</table>
+	
+  <h2>Icons</h2>
+  <p>Icons for the current application</p>
+  <table border="1" cellpadding="2" cellspacing="0">
+		  <tr>
+		    <th><b>Attribute</b></th>
+			<th><b>Description</b></th>
+		    <th align="center">Required</th>
+		  </tr>
+		   <tr>
+		    <td>file</td>
+		    <td>The icon file</td>
+		    <td align="center">Yes</td>
+		  </tr>
+		  <tr>
+		    <td>kind</td>
+		    <td><code>splash</code></td>
+		    <td align="center">No (if not specified, the default is used)</td>
+		  </tr>
+	</table>
+  <h2>Shortcut</h2>
+  <p>Create shortcuts to the application in the user's environment. Only one of these elements can be defined per task.</p>
+  <table border="1" cellpadding="2" cellspacing="0">
+		  <tr>
+		    <th><b>Attribute</b></th>
+			<th><b>Description</b></th>
+		    <th align="center">Required</th>
+		  </tr>
+		  <tr>
+		    <td>desktop</td>
+		    <td><code>true|false</code> Whether to add a shortcut to the user's desktop</td>
+		    <td align="center">No (defaults to <code>false</code>)</td>
+		  </tr>
+		  <tr>
+		    <td>menu</td>
+		    <td><code>true|false</code> Whether to add a shortcut to the user's menu</td>
+		    <td align="center">No (defaults to <code>false</code>)</td>
+		  </tr>
+		  <tr>
+		    <td>submenu</td>
+		    <td>Which submenu to use when adding a shortcut to the user's menu</td>
+		    <td align="center">No</td>
+		  </tr>
+		 <tr>
+		    <td>online</td>
+		    <td><code>true|false</code> Whether or not the application can be launched offline</td>
+		    <td align="center">No (defaults to <code>false</code>)</td>
+		  </tr>
+	</table>
+  <h2>Association</h2>
+  <p>Create file associations to the application in the user's environment. Only one of these elements can be defined per task.</p>
+  <table border="1" cellpadding="2" cellspacing="0">
+		  <tr>
+		    <th><b>Attribute</b></th>
+			<th><b>Description</b></th>
+		    <th align="center">Required</th>
+		  </tr>
+		  <tr>
+		    <td>extensions</td>
+		    <td>A comma-separated list of extensions that the application should be associated with</td>
+		    <td align="center">No</td>
+		  </tr>
+		    <td>mimetype</td>
+		    <td>A mimetype the application should be associated with</td>
+		    <td align="center">No</td>
+		  </tr>
+	</table>
+    
+    <h2>J2SEs</h2>
+    <p>The minimum version of the JRE required by the application</p>
+	  <table border="1" cellpadding="2" cellspacing="0">
+			  <tr>
+			    <th><b>Attribute</b></th>
+				<th><b>Description</b></th>
+			    <th align="center">Required</th>
+			  </tr>
+			  <tr>
+			    <td>minVersion</td>
+			    <td><code>1.1|1.2|1.3|1.4|1.5</code> The minimum version of the JRE required to download the application</td>
+			    <td align="center">No (default to <code>1.4</code>)</td>
+			  </tr>
+			    <td>args</td>
+			    <td>Arguments to be supplied to the JRE.</td>
+			    <td align="center">No</td>
+			  </tr>
+		</table>
+		<p>The j2se element can also contain any given amount of <code>j2seProperty</code> elements, defined as such:</p>
+		<h3>J2seproperty</h3>
+		<table border="1" cellpadding="2" cellspacing="0">
+			  <tr>
+			    <th><b>Attribute</b></th>
+				<th><b>Description</b></th>
+			    <th align="center">Required</th>
+			  </tr>
+			  <tr>
+			    <td>name</td>
+			    <td>The property name</td>
+			    <td align="center">Yes</td>
+			   </tr>
+			  <tr>
+			    <td>value</td>
+			    <td>The property value</td>
+			    <td align="center">Yes</td>
+			   </tr>
+		</table>
+		
+    <h2>Libraries</h2>
+    <p>Libraries (jars) required by the application. Defined as an Ant <a href="http://ant.apache.org/manual/CoreTypes/fileset.html" target="_blank">fileset</a>. </p>
+    <h2>Native Libraries</h2>        
+    <p>Native Libraries required by the application. Defined as an Ant <a href="http://ant.apache.org/manual/CoreTypes/fileset.html" target="_blank">fileset</a>, with a single extra attribute (below). If the files included in the fileset are not jars, they will be packaged as such.</p>  
+	<table border="1" cellpadding="2" cellspacing="0">
+			  <tr>
+			    <th><b>Attribute</b></th>
+				<th><b>Description</b></th>
+			    <th align="center">Required</th>
+			  </tr>
+			  <tr>
+			    <td>os</td>
+			    <td>The OS this native library should be downloaded against.</td>
+			    <td align="center">No</td>
+			    </tr>
+		</table>
+		</body>
+</html>
+	

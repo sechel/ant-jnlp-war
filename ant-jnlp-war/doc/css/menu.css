@@ -5,4 +5,11 @@ ul#menu{
 div#logos{
 	position:absolute;
 	bottom:10px;
+	text-align: center;
+	width:100%;
+}
+
+body{
+	border-right:1px solid #333333;
+	height:97%;
 }

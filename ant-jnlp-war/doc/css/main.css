@@ -1,0 +1,17 @@
+h1{
+	font-family: Arial, sans-serif;
+	font-size: 1.0em;
+}
+
+h2{
+	font-family: Arial, sans-serif;
+	font-size: 0.8em;
+}
+h3{
+	font-family: Arial, sans-serif;
+	font-size: 0.7em;
+}
+
+table tr td{
+	vertical-align: top;
+}
