@@ -23,7 +23,7 @@ import org.unintelligible.antjnlpwar.util.ArrayUtil;
 public class J2se extends DataType implements JnlpWarDataType {
 	
 	private String args;
-	private String minVersion;
+	private String minVersion="1.4";
 	private List properties=new ArrayList();
 	//might want to support versions more fully in the future?
 	//private static final String[] versions={"1.1", "1.2", "1.3", "1.4", "1.5"};
