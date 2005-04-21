@@ -1,0 +1,124 @@
+ant task - requirements
+
+root section:
+
+jnlp
+	spec: "1.0+", "1.5+" (default to "1.5+")
+	codebase (base application url in which jnlp file exists
+	href (name of jnlp file - default to "laucnh.jnlp")
+
+
+all main sections can be tagged with the following attributes:
+	os
+	arch
+
+Information section:
+	offline-allowed: true or false (if element is present, offline-allowed=true)
+	
+	description
+		kind="one-lin", "short", "tooltip", none
+		
+	icon (gif or jpeg, no transparency; should be 64x64 unless splash)
+		href
+		width, height (optional)
+		kind=none, "splash"
+		
+	title
+	
+	vendor
+	
+	homepage 
+		@href
+	
+	shortcut
+		@online
+
+Resources
+	j2se 
+		version="1.5.0" (default)
+		href="http://java.sun.com/products/autodl/j2se" (default)
+		java-vm-args:
+					-client
+					-server
+					-verbose
+					-showversion
+					-esa
+					-enablesystemassertions
+					-dsa
+					-disablesystemassertions
+					-Xmixed
+					-Xint
+					-Xnoclassgc
+					-Xincgc
+					-Xbatch
+					-Xprof
+					-Xdebug
+					-Xrs
+					-XX:+ForceTimeHighResolution
+					-XX:-ForceTimeHighResolution
+					
+					Plus any argument starting with one of the following:
+					
+					-ea:
+					-enableassertions:
+					-da:
+					-disableassertions:
+					-verbose:
+					-Xms
+					-Xmx
+					-Xss
+					-XX:NewRatio
+					-XX:NewSize
+					-XX:MaxNewSize
+					-XX:PermSize
+					-XX:MaxPermSize
+					-XX:MaxHeapFreeRatio
+					-XX:MinHeapFreeRatio
+					-XX:UseSerialGC
+					-XX:ThreadStackSize
+					-XX:MaxInlineSize
+					-XX:ReservedCodeCacheSize
+					
+
+		
+	jar
+		href
+		
+	property
+		name
+		value
+		
+	nativelib
+		href
+		
+Security
+	one of <all-permissions/>
+		
+
+Application-desc
+	main-class
+	
+	argument (element)
+	
+installer-desc (run once on install)
+	main-class
+	
+	
+	
+	
+Functional requirements
+	do not deal with versions or jardiff: would require stocking of info on build machine. use only datecreated timiestamp - but how to keep that for lib files?
+		File.setLastModified()
+		allow users to specify versions manually as nested objects? currently versinning doesn't work in the JnlpServlet
+	
+	if use 1.5+ spec features, use that version in JNLP declaration
+		
+	generate index.html page to autodtect java presence
+	
+	generate index.txt containing same content as index.html w/o body tags to be included in generated web pages
+
+	
+	usepack200= true --> pack *.jar -> *.jar.gz
+	
+	add a property to allow webstart loggin to be turned on and off?
+	

@@ -1,0 +1,29 @@
+<project default="run" xmlns:jw="org.unintelligible.antjnlpwar">
+	<typedef resource="org/unintelligible/antjnlpwar/antjnlpwar.xml" format="xml" uri="org.unintelligible.antjnlpwar"/>
+	
+	<target name="run">
+		
+		<!--<input message="Please enter keystore password:"  addproperty="keypass" />-->
+		
+		<jw:jnlpwar
+			tofile="../dist/test.war"
+			codebase="http://www.sdsdf.com/application"
+			vendor="Daft Products"
+			pack200="true"
+			signStorepass="snowdrop"
+			signAlias="mosaicimagecheckercertification">
+				<jw:description>This is yet another daft product- normal description</jw:description>
+				<jw:description kind="short">This is yet another daft product- short description</jw:description>
+				<jw:icon file="../build.xml"/>
+				<jw:icon kind="splash" file="example-build.xml"/>
+				<jw:j2se minVersion="1.4" args="-Xmx250M">
+					<jw:j2seProperty name="MyAppProperty" value="myAppPropertyValue"/>
+				</jw:j2se>
+				<lib dir="../lib/dist">
+					<include name="**/*.jar"/>
+				</lib>
+				<jw:application mainclass="bla.bla.Bla" jar="../lib/dist/velocity-1.4.jar"/>
+		</jw:jnlpwar>
+		
+	</target>
+</project>
