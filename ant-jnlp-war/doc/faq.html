@@ -2,6 +2,15 @@
 	<head>
 		<title>Further Information</title>
 		<link href="css/main.css" rel="Stylesheet" type="text/css"/>
+		<script language="JavaScript">
+			function writeTo(prefix, suffix, topic) {
+			  mt= "mai" + "lto:" + prefix + "@" + suffix;
+			  if(topic != null){
+			 	 mt+="?sub"+"ject="+topic;
+			  }
+			  document.location=mt;
+			}
+		</script>
 	</head>
 	<body>
 		<h1>General</h1>
@@ -20,7 +29,7 @@
 			<li>OS, locale -specific information and resouces: The JNLP spec allows the developer to specify information (such as application home page, etc...) and resources (jars) on a per-locale or per-OS basis. The Ant Web Start Task does allow native libraries to be specified on a per-os basis; other than that, all resources and information sections are generic.</li>
 			<li>J2SE: The JNLP spec allows fine-grained detailing of J2SE versions and allows properties and arguments to be defined accordingly. The Ant Web Start Task only allows J2SE version to be specified by major versions.</li>
 		</ul>
-		<a href="mailto:zcrar70@users.sourceforge.net?subject=Missing items from the list of JNLP elements ant-jnlp-war doesn't support (in the documentation FAQ)">Let us know</a> if there's any we've missed.
+		<a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'Missing items from the list of JNLP elements ant-jnlp-war doesnt support (in the documentation FAQ)');" href="#">Let us know</a> if there's any we've missed.
 		</p>
 		
 		
