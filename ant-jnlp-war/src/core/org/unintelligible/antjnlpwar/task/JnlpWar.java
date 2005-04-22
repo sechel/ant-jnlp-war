@@ -76,12 +76,8 @@ public class JnlpWar extends BaseJnlpWar {
 				+ System.currentTimeMillis());
 		log("created rootfolder: " + rootFolder);
 		
-		//create the index file
-		File index=new File(rootFolder, "index.html");
 		
 		try {
-			index.createNewFile();
-			
 			File applicationFolder = createFolder(rootFolder, "application");
 			File applicationNativeLibFolder = createFolder(applicationFolder, "nativelib");
 			File iconFolder = createFolder(applicationFolder, "icon");
@@ -190,6 +186,17 @@ public class JnlpWar extends BaseJnlpWar {
 				webxmlGenerator.generate();
 			} catch (Exception e) {
 				throw new BuildException("Could not generate the Web.xml file",
+						e);
+			}
+			//generate the index.html file
+			File indexhtmlOutputFile = new File(rootFolder, "index.html");
+
+			Generator indexhtmlGenerator = new Generator(this, indexhtmlOutputFile,
+					"org/unintelligible/antjnlpwar/template/indexhtml.vm");
+			try {
+				indexhtmlGenerator.generate();
+			} catch (Exception e) {
+				throw new BuildException("Could not generate the Index.html file",
 						e);
 			}
 			//create the target war file

@@ -1,0 +1,12 @@
+<html>
+		<head>
+			<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+			<title>${task.title}</title>
+			<script type="text/javascript">
+				document.location='./application/launch.jnlp';
+			</script>
+		</head>
+		<body>
+			
+		</body>
+</html>
