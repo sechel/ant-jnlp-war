@@ -199,6 +199,17 @@ public class JnlpWar extends BaseJnlpWar {
 				throw new BuildException("Could not generate the Index.html file",
 						e);
 			}
+			//generate the download.html file
+			File downloadhtmlOutputFile = new File(rootFolder, "download.html");
+
+			Generator downloadhtmlGenerator = new Generator(this, downloadhtmlOutputFile,
+					"org/unintelligible/antjnlpwar/template/downloadhtml.vm");
+			try {
+				downloadhtmlGenerator.generate();
+			} catch (Exception e) {
+				throw new BuildException("Could not generate the Download.html file",
+						e);
+			}
 			//create the target war file
 			/*
 			War warTask=new War();

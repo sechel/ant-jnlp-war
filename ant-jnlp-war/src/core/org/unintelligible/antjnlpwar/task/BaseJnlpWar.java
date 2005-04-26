@@ -83,6 +83,8 @@ public abstract class BaseJnlpWar extends Task {
 	private String signStorepass;
 	
 	private String signAlias;
+	
+	private String applicationContext;
 
 	//task sub-elements
 	private List descriptions = new ArrayList();
@@ -138,9 +140,17 @@ public abstract class BaseJnlpWar extends Task {
 	public void setCodebase(String codebase) {
 		if(codebase.charAt(codebase.length()-1)=='/'){
 			this.codebase = codebase+"application";
+			this.applicationContext=codebase;
 		} else{
 			this.codebase = codebase+"/application";
+			this.applicationContext='/'+codebase;
 		}
+	}
+	/**
+	 * @return Returns the applicationContext.
+	 */
+	public String getApplicationContext() {
+		return applicationContext;
 	}
 
 	/**
@@ -449,8 +459,4 @@ public abstract class BaseJnlpWar extends Task {
 	public void addNativeLib(NativeLib nl) {
 		nativeLibs.add(nl);
 	}
-
-	
-
-	
 }
