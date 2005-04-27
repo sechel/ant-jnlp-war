@@ -398,7 +398,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * @return Returns the jnlpVersion.
 	 */
 	public double getJnlpVersion() {
-		if(association!=null || shortcut!=null || pack200){
+		if(association!=null || shortcut!=null){
 			return JNLP_VERSION_15;
 		}
 		//check each j2se element
