@@ -17,6 +17,14 @@ table tr td{
 }
 
 .specVersionWarning{
-	color:blue;
+	color:green;
 	font-weight: bold;
+}
+
+code{
+	color:blue;
+}
+
+var{
+	color:green;
 }
