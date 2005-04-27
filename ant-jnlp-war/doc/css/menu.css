@@ -10,6 +10,7 @@ div#logos{
 }
 
 body{
-	border-right:1px solid #333333;
-	height:97%;
+	/*border-right:1px solid #333333;
+	height:97%;*/
+	background-color: #DDDDDD;
 }
