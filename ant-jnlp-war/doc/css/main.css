@@ -15,3 +15,8 @@ h3{
 table tr td{
 	vertical-align: top;
 }
+
+.specVersionWarning{
+	color:blue;
+	font-weight: bold;
+}
