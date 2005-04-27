@@ -20,7 +20,7 @@ import org.unintelligible.antjnlpwar.util.ArrayUtil;
  *
  */
 public class Icon extends DataType implements JnlpWarDataType{
-	public static final String[] kinds={"splash"};
+	public static final String[] kinds={"splash", "default", "selected", "disabled", "rollover"};
 	static{
 		Arrays.sort(kinds);
 	}
@@ -43,7 +43,11 @@ public class Icon extends DataType implements JnlpWarDataType{
 	 * @return Returns the kind.
 	 */
 	public String getKind() {
-		return kind;
+		if(kind!=null){
+			return kind;
+		} else{
+			return "default";
+		}
 	}
 	/**
 	 * @param kind The kind to set.
