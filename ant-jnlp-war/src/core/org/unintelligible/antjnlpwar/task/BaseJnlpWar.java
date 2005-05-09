@@ -147,7 +147,7 @@ public abstract class BaseJnlpWar extends Task {
 			this.applicationContext=codebase;
 		} else{
 			this.codebase = codebase+"/application";
-			this.applicationContext='/'+codebase;
+			this.applicationContext=codebase+'/';
 		}
 	}
 	/**
