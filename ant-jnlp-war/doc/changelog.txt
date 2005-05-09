@@ -1,0 +1,17 @@
+todo
+change codebase to $$codebase (check for others) and update quickstart
+update example showing how to generate key to sign jars from ant
+
+
+
+
+
+
+
+changelog
+
+2005-04-25: added javascript Java check and optional task parameter to generate the corrsponding page [zcrar70]
+2005-05-09: allow tasks to run in Java 1.4 (thanks currane)
+2005-05-09: allow specification of keystore path for task (thanks currane)
+2005-05-09: fix potential IO exception on copying lib+application jars (thanks currane)
+2005-05-09: added doctype to web.xml (thanks currane)
