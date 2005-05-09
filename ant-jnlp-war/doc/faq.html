@@ -23,6 +23,7 @@
 		<ul>
 			<li><a href="#2">How does versioning work in the Ant Web Start Task?</a></li>
 			<li><a href="#4">How does the Ant Web Start Task decide which version of the JNLP spec to use?</a></li>
+			<li><a href="#6">How does Java detection work and why isn't always reliable?</a></li>
 		</ul>
 		<h1>FAQ Answers</h1>	
 		<p>
@@ -32,7 +33,7 @@
 			<li>OS, locale -specific information and resouces: The JNLP spec allows the developer to specify information (such as application home page, etc...) and resources (jars) on a per-locale or per-OS basis. The Ant Web Start Task does allow native libraries to be specified on a per-os basis; other than that, all resources and information sections are generic.</li>
 			<li>J2SE: The JNLP spec allows fine-grained detailing of J2SE versions and allows properties and arguments to be defined accordingly. The Ant Web Start Task only allows J2SE version to be specified by major versions.</li>
 		</ul>
-		<a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'Missing items from the list of JNLP elements ant-jnlp-war doesnt support (in the documentation FAQ)');" href="#">Let us know</a> if there's any we've missed.
+		<a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'Ant Web Start Task: Missing items from the list of JNLP elements the task doesnt support in the FAQ');" href="#">Let us know</a> if there's any we've missed.
 		</p>
 		
 		<p>
@@ -43,7 +44,7 @@
 			<li>Improvement of the generated web application index page to check for a Java installation before forwarding to the Web Start deployment descriptor</li>
 			<li>Improvement to the choice of JNLP spec to use in the deployment descriptor: need to draw up a comprehensive list of which elements in the JNLP task are new to 1.5+</li>			
 		</ul>
-		<a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'I think I can help with Ant Web Start Task future developments');" href="#">Let us know</a> you think you can help in any way.
+		<a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'Ant Web Start Task: I think I can help with future development');" href="#">Let us know</a> you think you can help in any way.
 		</p>
 		
 		<p>
@@ -63,6 +64,13 @@
 		<p>
 		<a name="4"><h2>How does the Ant Web Start Task decide which version of the JNLP spec to use?</h2></a>
 		New elements have been added to the JNLP specification with J2SE 1.5 - a JNLP file with version 1.5 is not parseable by a previous version of the Web Start client. At the moment the spec number tends to go to 1.5 more often than it needs to; this should be fixed, and a warning should be issued if the user selects an elements that are 1.5+ specific.
+		</p>
+		
+		<p>
+		<a name="#6"><h2>How does Java detection work and why isn't always reliable?</h2></a>
+		The reliability of the Java checking code on the client side varies due to differences in browser implementation - on IE, the <a href="http://java.sun.com/j2se/1.5.0/docs/guide/javaws/developersguide/launch.html">suggested code</a> for Java discovery is VBScript, which allows per-version detection of Java; on Mozilla/Firefox however, the suggested Javascript is only able to detect whether or not the <code>x-java-jnlp-file</code> mime type has been added. So, it isn't possible to reliably check which version of Java a client has installed on his machine.
+		<br/><br/>
+		The recommended code is what the Ant Web Start Task uses, but its reliability hasn't been throughly tested and as such is disabled by default. Any suggested improvements <a onclick="writeTo('zcrar70', 'users.sourceforge.net', 'Ant Web Start Task: Suggested improvements to Java detection code on client side');" href="#">are welcome</a>.
 		</p>
 		
 		

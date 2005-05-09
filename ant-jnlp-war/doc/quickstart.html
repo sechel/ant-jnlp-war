@@ -50,7 +50,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;target name="dist"&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<var>&lt;-- Create a distributable WAR archive of the application using the following attributes:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * tofile: the destination WAR file<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * codebase: where the application will be deployed to<br/>
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * codebase: where the application will be deployed to<br/> -->
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * title: the application name<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * vendor: your company name<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * pack200: create pack200 archives for quicker client downloads<br/>
@@ -59,7 +59,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --&gt;</var><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;jw:jnlpwar<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofile="dist/myApplicationName.war"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codebase="http://www.whatever.com/myApplicationName"<br/>
+<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;codebase="http://www.whatever.com/myApplicationName"<br/>-->
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title="Application Name"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vendor="Vendor Name Goes Here"<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pack200="true"<br/>
@@ -99,7 +99,7 @@
 		 -->
 		 <h1>Distribution</h1>
 		<p>
-			Users can access the application throught their browser by following a link to the path of the deployed WAR archive (which should be the same as specified in the <code>codebase</code> argument to the <code>jnlpwar</code> task); using the example above, this would be <var>http://www.whatever.com/myApplicationName</var>.
+			Users can access the application throught their browser by following a link to the path of the deployed WAR archive - for instance, if you deploy the war to <var>http://www.whatever.com/myApplicationName</var>, the user would be able to download the application by pointing their browser to that URL. <!-- which should be the same as specified in the <code>codebase</code> argument to the <code>jnlpwar</code> task); using the example above, this would be <var>http://www.whatever.com/myApplicationName</var>-->.
 		</p>
 	</body>
 </html>

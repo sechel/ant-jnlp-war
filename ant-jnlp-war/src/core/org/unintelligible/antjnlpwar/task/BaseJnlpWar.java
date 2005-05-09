@@ -69,6 +69,8 @@ public abstract class BaseJnlpWar extends Task {
 	private boolean allpermissions = true;
 	
 	private boolean pack200 = false;
+	
+	private boolean attemptJavaDetection = false;
 
 	private String codebase;
 
@@ -293,6 +295,18 @@ public abstract class BaseJnlpWar extends Task {
 	public void setSignKeystore(String signKeystore) {
 		this.signKeystore = signKeystore;
 	}
+	/**
+	 * @return Returns the attemptJavaDetection.
+	 */
+	public boolean getAttemptJavaDetection() {
+		return attemptJavaDetection;
+	}
+	/**
+	 * @param attemptJavaDetection The attemptJavaDetection to set.
+	 */
+	public void setAttemptJavaDetection(boolean attemptJavaDetection) {
+		this.attemptJavaDetection = attemptJavaDetection;
+	}
 
 	/*
 	 * Setters for sub-elements
@@ -473,4 +487,5 @@ public abstract class BaseJnlpWar extends Task {
 	public void addNativeLib(NativeLib nl) {
 		nativeLibs.add(nl);
 	}
+	
 }

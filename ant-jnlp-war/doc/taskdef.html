@@ -19,7 +19,7 @@
 		   <tr>
 		    <td>codebase</td>
 		    <td>The url to which the WAR file will be deployed</td>
-		    <td align="center">No</td>
+		    <td align="center">No (unless attemptJavaDetection is set to <code>true</code>)</td>
 		  </tr>
 		  <tr>
 		    <td>title</td>
@@ -65,6 +65,11 @@
 		    <td>signKeystore</td>
 		    <td>The location of the keystore (used to sign jars)</td>
 		    <td align="center">No (defaults to $home/.keystore)</td>
+		  </tr>
+		   <tr>
+		    <td>attemptJavaDetection</td>
+		    <td><code>true|false</code> Whether or not to attempt Java detection on the client side (and thereby prompt them to download Java if not). The reliability of this varies across browsers.</td>
+		    <td align="center">No (defaults to <code>false</code>)</td>
 		  </tr>
   </tr>
   </table>
