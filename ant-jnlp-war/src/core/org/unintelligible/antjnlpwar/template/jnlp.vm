@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jnlp
 	spec="${task.jnlpVersion}+"
-	codebase="${task.codebase}"
+	#if( $task.codebase )
+		codebase="${task.codebase}"
+	#else
+		codebase="$$codebase"
+	#end
 	href="launch.jnlp">
 	##
 	##INFORMATION
@@ -10,7 +14,7 @@
     <title>${task.title}</title>
     <vendor>${task.vendor}</vendor>
 	#if( $task.homepage )
-		<homepage href="docs/help.html"/>
+		<homepage href="${task.homepage}"/>
 	#end
 	#foreach( $description in $task.descriptions )
 		<description #if( $description.kind ) kind="${description.kind}" #end>${description.text}</description>
