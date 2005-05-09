@@ -50,9 +50,9 @@
                        //forward to launch application
     				   document.location='./application/launch.jnlp';
                     } else {
-                        document.write('This application requires Java to be installed.');
-                        document.write('To install Java, please <a target="_blank" href="http://java.sun.com/PluginBrowserCheck?pass=${task.applicationContext}/download.html&fail=http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=www.java.com:80">click here</a>');
-    					document.write('Once Java is installed, please <a href="./index.html">click here</a> to launch the application.');
+                        document.write('<p>This application requires Java to be installed.</p>');
+                        document.write('<p>To install Java, please <a target="_blank" href="http://java.sun.com/PluginBrowserCheck?pass=${task.applicationContext}/download.html&fail=http://jdl.sun.com/webapps/getjava/BrowserRedirect?locale=en&host=www.java.com:80">click here</a></p>');
+    					document.write('<p>Once Java is installed, please <a href="./index.html">click here</a> to launch the application.</p>');
                     }
     			</script>
 			#else
