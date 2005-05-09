@@ -9,8 +9,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.FileScanner;
@@ -97,6 +99,7 @@ public class JnlpWar extends BaseJnlpWar {
 					"org/unintelligible/antjnlpwar/resource/jnlp-servlet.jar"),
 					webinflibFolder);
 
+			Set copiedJars=new HashSet();
 			//jars -> application folder
 			for(Iterator it=getLibs().iterator(); it.hasNext();){
 				FileScanner scanner=((ZipFileSet)it.next()).getDirectoryScanner(getProject());
@@ -106,11 +109,17 @@ public class JnlpWar extends BaseJnlpWar {
 					File jar=new File(basedir, includedJars[i]);
 					log("copying jar "+jar);
 					StreamUtil.copyFile(jar, applicationFolder);
-					expandedLibs.add(jar.getName());
+					if(!copiedJars.contains(jar)){
+						expandedLibs.add(jar.getName());
+						copiedJars.add(jar);
+					}
 				}
 			}
 			//main jar -> application folder
-			StreamUtil.copyFile(getApplication().getJar(), applicationFolder);
+			if(!copiedJars.contains(getApplication().getJar())){
+				StreamUtil.copyFile(getApplication().getJar(), applicationFolder);
+				copiedJars.add(getApplication().getJar());
+			}
 			
 			//native libs -> application/nativelib folder
 			for(Iterator it=getNativeLibs().iterator(); it.hasNext();){
