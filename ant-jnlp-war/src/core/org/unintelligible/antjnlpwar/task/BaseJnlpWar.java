@@ -84,6 +84,8 @@ public abstract class BaseJnlpWar extends Task {
 	
 	private String signAlias;
 	
+	private String signKeystore;
+	
 	private String applicationContext;
 
 	//task sub-elements
@@ -278,6 +280,18 @@ public abstract class BaseJnlpWar extends Task {
 	 */
 	public void setSignStorepass(String signStorepass) {
 		this.signStorepass = signStorepass;
+	}
+	/**
+	 * @return Returns the signPath.
+	 */
+	public String getSignKeystore() {
+		return signKeystore;
+	}
+	/**
+	 * @param signPath The signPath to set.
+	 */
+	public void setSignKeystore(String signKeystore) {
+		this.signKeystore = signKeystore;
 	}
 
 	/*
