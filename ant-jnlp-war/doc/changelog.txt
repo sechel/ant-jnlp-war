@@ -1,3 +1,6 @@
+todo
+allow users to set their own download page loyout (how? replace @JS by JA detection javascript? forward to a new page if Java not found?)
+
 changelog
 
 2005-04-25: added javascript Java check and optional task parameter to generate the corresponding page [zcrar70]
