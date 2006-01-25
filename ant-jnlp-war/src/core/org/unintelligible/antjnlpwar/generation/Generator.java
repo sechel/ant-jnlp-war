@@ -21,13 +21,13 @@ import org.unintelligible.antjnlpwar.task.BaseJnlpWar;
  */
 public class Generator {
 	private VelocityEngine engine = new VelocityEngine();
-	private BaseJnlpWar task;
+	private Object task;
 	private Template template;
 	private File outputFile;
 	
 
 
-	public Generator(BaseJnlpWar task, File outputFile, String templateName){
+	public Generator(Object task, File outputFile, String templateName){
 		this.task=task;
 		
 		this.outputFile=outputFile;

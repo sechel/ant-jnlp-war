@@ -8,5 +8,6 @@
 	<typedef name="shortcut" classname="org.unintelligible.antjnlpwar.datatype.Shortcut" uri="jw:/org.unintelligible.antjnlpwar"/>
 	<typedef name="association" classname="org.unintelligible.antjnlpwar.datatype.Association" uri="jw:/org.unintelligible.antjnlpwar"/>
 	<typedef name="nativelib" classname="org.unintelligible.antjnlpwar.datatype.NativeLib" uri="jw:/org.unintelligible.antjnlpwar"/>
+	<typedef name="extension" classname="org.unintelligible.antjnlpwar.datatype.Extension" uri="jw:/org.unintelligible.antjnlpwar"/>
 	<taskdef name="jnlpwar" classname="org.unintelligible.antjnlpwar.task.JnlpWar" uri="jw:/org.unintelligible.antjnlpwar"/>
 </antlib>

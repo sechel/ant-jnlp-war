@@ -44,6 +44,7 @@ import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Application;
 import org.unintelligible.antjnlpwar.datatype.Association;
 import org.unintelligible.antjnlpwar.datatype.Description;
+import org.unintelligible.antjnlpwar.datatype.Extension;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.datatype.NativeLib;
@@ -69,8 +70,6 @@ public abstract class BaseJnlpWar extends Task {
 	private boolean allpermissions = true;
 	
 	private boolean pack200 = false;
-	
-	private boolean attemptJavaDetection = false;
 
 	private String codebase;
 
@@ -85,10 +84,6 @@ public abstract class BaseJnlpWar extends Task {
 	private String signStorepass;
 	
 	private String signAlias;
-	
-	private String signKeystore;
-	
-	private String applicationContext;
 
 	//task sub-elements
 	private List descriptions = new ArrayList();
@@ -103,8 +98,12 @@ public abstract class BaseJnlpWar extends Task {
 
 	private List nativeLibs = new ArrayList();
 	
-	protected List expandedNativeLibs=new ArrayList();
+        protected List expandedNativeLibs=new ArrayList();
 
+       	private List extensions = new ArrayList();
+        
+        protected List expandedExtensions = new ArrayList();
+        
 	private List j2ses = new ArrayList();
 
 	private Association association;
@@ -144,17 +143,9 @@ public abstract class BaseJnlpWar extends Task {
 	public void setCodebase(String codebase) {
 		if(codebase.charAt(codebase.length()-1)=='/'){
 			this.codebase = codebase+"application";
-			this.applicationContext=codebase;
 		} else{
 			this.codebase = codebase+"/application";
-			this.applicationContext=codebase+'/';
 		}
-	}
-	/**
-	 * @return Returns the applicationContext.
-	 */
-	public String getApplicationContext() {
-		return applicationContext;
 	}
 
 	/**
@@ -283,30 +274,6 @@ public abstract class BaseJnlpWar extends Task {
 	public void setSignStorepass(String signStorepass) {
 		this.signStorepass = signStorepass;
 	}
-	/**
-	 * @return Returns the signPath.
-	 */
-	public String getSignKeystore() {
-		return signKeystore;
-	}
-	/**
-	 * @param signPath The signPath to set.
-	 */
-	public void setSignKeystore(String signKeystore) {
-		this.signKeystore = signKeystore;
-	}
-	/**
-	 * @return Returns the attemptJavaDetection.
-	 */
-	public boolean getAttemptJavaDetection() {
-		return attemptJavaDetection;
-	}
-	/**
-	 * @param attemptJavaDetection The attemptJavaDetection to set.
-	 */
-	public void setAttemptJavaDetection(boolean attemptJavaDetection) {
-		this.attemptJavaDetection = attemptJavaDetection;
-	}
 
 	/*
 	 * Setters for sub-elements
@@ -426,7 +393,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * @return Returns the jnlpVersion.
 	 */
 	public double getJnlpVersion() {
-		if(association!=null || shortcut!=null){
+		if(association!=null || shortcut!=null || pack200){
 			return JNLP_VERSION_15;
 		}
 		//check each j2se element
@@ -472,6 +439,22 @@ public abstract class BaseJnlpWar extends Task {
 	}
 
 	/**
+	 * Gets a list of String representing the filename of the extension libs (packed as jars) for the application
+	 * @return
+	 */
+	public List getExpandedExtensions(){
+		return expandedExtensions;
+
+	}
+
+	/**
+	 * @return Returns the extension libs.
+	 */
+	public List getExtensions() {
+		return extensions;
+	}
+
+	/**
 	 * @return Returns the shortcut.
 	 */
 	public Shortcut getShortcut() {
@@ -487,5 +470,41 @@ public abstract class BaseJnlpWar extends Task {
 	public void addNativeLib(NativeLib nl) {
 		nativeLibs.add(nl);
 	}
+
+ 	/**
+	 * Adds a set of extension libraries packeaged as jars to be distributed with
+	 * the application. 
+	 * 
+	 * @param nl
+	 */
+	public void addExtension(Extension ext) {
+		extensions.add(ext);
+	}
+
+   /**
+     * Holds value of property signKeystore.
+     */
+    private String signKeystore;
+
+    /**
+     * Getter for property signKeystore.
+     * @return Value of property signKeystore.
+     */
+    public String getSignKeystore() {
+
+        return this.signKeystore;
+    }
+
+    /**
+     * Setter for property signKeystore.
+     * @param signKeystore New value of property signKeystore.
+     */
+    public void setSignKeystore(String signKeystore) {
+
+        this.signKeystore = signKeystore;
+    }
+
+	
+
 	
 }

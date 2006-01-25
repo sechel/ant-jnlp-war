@@ -7,6 +7,8 @@
 package org.unintelligible.antjnlpwar.datatype;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.tools.ant.types.DataType;
 import org.unintelligible.antjnlpwar.task.JnlpWar;
@@ -63,5 +65,8 @@ public class Application extends DataType implements JnlpWarDataType {
 		// TODO Auto-generated method stub
 		return JnlpWar.JNLP_VERSION_10;
 	}
-
+        
+        public List getMainclassargs() {
+            return Arrays.asList(arguments.split(" "));
+        }
 }
