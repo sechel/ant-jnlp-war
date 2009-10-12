@@ -7,7 +7,7 @@
 package org.unintelligible.antjnlpwar.datatype;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tools.ant.types.DataType;
@@ -21,6 +21,7 @@ public class Application extends DataType implements JnlpWarDataType {
 	private String mainclass;
 	private File jar;
 	private String arguments;
+	private List<String> argumentList;
 	
 	/**
 	 * @return Returns the arguments.
@@ -31,7 +32,12 @@ public class Application extends DataType implements JnlpWarDataType {
 	/**
 	 * @param arguments The arguments to set.
 	 */
-	public void setArguments(String arguments) {
+	public void setArguments(String arguments) 
+	{
+		String[] tmp = arguments.split(" ");
+		argumentList = new ArrayList<String>(tmp.length);
+		for (String t: tmp)
+			argumentList.add(t);
 		this.arguments = arguments;
 	}
 	/**
@@ -65,8 +71,9 @@ public class Application extends DataType implements JnlpWarDataType {
 		// TODO Auto-generated method stub
 		return JnlpWar.JNLP_VERSION_10;
 	}
-        
-        public List getMainclassargs() {
-            return Arrays.asList(arguments.split(" "));
-        }
+	public List<String> getArgumentList() {
+		return argumentList;
+	}
+	
+
 }
