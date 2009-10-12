@@ -98,7 +98,7 @@ public abstract class BaseJnlpWar extends Task {
 
 	private List nativeLibs = new ArrayList();
 	
-        protected List expandedNativeLibs=new ArrayList();
+	protected List expandedNativeLibs=new ArrayList();
 
        	private List extensions = new ArrayList();
         
