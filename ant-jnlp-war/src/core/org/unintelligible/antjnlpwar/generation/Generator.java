@@ -21,13 +21,13 @@ import org.unintelligible.antjnlpwar.task.BaseJnlpWar;
  */
 public class Generator {
 	private VelocityEngine engine = new VelocityEngine();
-	private Object task;
+	private BaseJnlpWar task;
 	private Template template;
 	private File outputFile;
 	
 
 
-	public Generator(Object task, File outputFile, String templateName){
+	public Generator(BaseJnlpWar task, File outputFile, String templateName){
 		this.task=task;
 		
 		this.outputFile=outputFile;
@@ -48,6 +48,7 @@ public class Generator {
 		try {
 			this.template = engine.getTemplate(templateName);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			throw new IllegalArgumentException("Could not load the template file 'org/unintelligible/antjnlp/template/jnlp.vm'");
 		}
 
