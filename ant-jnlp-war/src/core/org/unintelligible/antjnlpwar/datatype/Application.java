@@ -21,7 +21,7 @@ public class Application extends DataType implements JnlpWarDataType {
 	private String mainclass;
 	private File jar;
 	private String arguments;
-	private List<String> argumentList;
+	private List argumentList;
 	
 	/**
 	 * @return Returns the arguments.
@@ -35,9 +35,12 @@ public class Application extends DataType implements JnlpWarDataType {
 	public void setArguments(String arguments) 
 	{
 		String[] tmp = arguments.split(" ");
-		argumentList = new ArrayList<String>(tmp.length);
-		for (String t: tmp)
+		argumentList = new ArrayList(tmp.length);
+		for (int i= 0; i < tmp.length; i++)
+		{
+			String t = tmp[i];
 			argumentList.add(t);
+		}
 		this.arguments = arguments;
 	}
 	/**
@@ -71,7 +74,7 @@ public class Application extends DataType implements JnlpWarDataType {
 		// TODO Auto-generated method stub
 		return JnlpWar.JNLP_VERSION_10;
 	}
-	public List<String> getArgumentList() {
+	public List getArgumentList() {
 		return argumentList;
 	}
 	
