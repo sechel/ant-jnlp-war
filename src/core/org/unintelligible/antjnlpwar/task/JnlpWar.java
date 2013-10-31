@@ -9,19 +9,19 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Iterator;
-import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.FileScanner;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.taskdefs.Jar;
+import org.apache.tools.ant.taskdefs.Manifest;
+import org.apache.tools.ant.taskdefs.ManifestException;
 import org.apache.tools.ant.taskdefs.SignJar;
 import org.apache.tools.ant.taskdefs.Zip;
-import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.datatype.NativeLib;
+import org.unintelligible.antjnlpwar.datatype.WebstartLib;
 import org.unintelligible.antjnlpwar.generation.Generator;
 import org.unintelligible.antjnlpwar.util.StreamUtil;
 
@@ -85,11 +85,8 @@ public class JnlpWar extends BaseJnlpWar {
 			//
 			//copy icons, jars etc.. to the relevant folders
 			//
-			for (Iterator it = getIcons().iterator(); it.hasNext();) {
-				//icons
-				Icon icon = (Icon) it.next();
+			for (Icon icon : getIcons()) {
 				StreamUtil.copyFile(icon.getFile(), iconFolder);
-
 			}
 			//jndc servlet -> web-inf/lib folder
 			StreamUtil.copyFile("jnlp-servlet.jar", this.getClass().getClassLoader().getResourceAsStream(
@@ -97,14 +94,16 @@ public class JnlpWar extends BaseJnlpWar {
 					webinflibFolder);
 
 			//jars -> application folder
-			for(Iterator it=getLibs().iterator(); it.hasNext();){
-				FileScanner scanner=((ZipFileSet)it.next()).getDirectoryScanner(getProject());
+			for(WebstartLib lib : getLibraries()){
+				FileScanner scanner = lib.getDirectoryScanner(getProject());
 				String[] includedJars=scanner.getIncludedFiles();
 				File basedir=scanner.getBasedir();
-				for(int i=0; i<includedJars.length;i++){
-					File jar=new File(basedir, includedJars[i]);
-					log("copying jar "+jar);
+				for(String jarName : includedJars){
+					File jar = new File(basedir, jarName);
+					File copiedJar = new File(applicationFolder, jarName);
+					log("copying jar " + jar);
 					StreamUtil.copyFile(jar, applicationFolder);
+					writeManifestAttributes(lib.getManifest(), copiedJar);
 					expandedLibs.add(jar.getName());
 				}
 			}
@@ -112,8 +111,7 @@ public class JnlpWar extends BaseJnlpWar {
 			StreamUtil.copyFile(getApplication().getJar(), applicationFolder);
 			
 			//native libs -> application/nativelib folder
-			for(Iterator it=getNativeLibs().iterator(); it.hasNext();){
-				NativeLib nl = ((NativeLib)it.next());
+			for(NativeLib nl : getNativeLibs()){
 				String os = nl.getOs() == null ? "" : nl.getOs();
 				String arch = nl.getArch() == null ? "" : nl.getArch();
 				FileScanner scanner = nl.getDirectoryScanner(getProject());
@@ -244,6 +242,20 @@ public class JnlpWar extends BaseJnlpWar {
 			
 		}
 	}
+
+	
+	private void writeManifestAttributes(Manifest mf, File jar) {
+		Jar jarTask = new Jar();
+		try {
+			jarTask.addConfiguredManifest(mf);
+		} catch (ManifestException e) {
+			e.printStackTrace();
+		}
+		jarTask.setDestFile(jar);
+		jarTask.setUpdate(true);
+		jarTask.execute();
+	}
+	
 	private void packJars(File folder){
 		log("packJars for "+folder);
 		Pack200Task packTask;
@@ -307,9 +319,7 @@ public class JnlpWar extends BaseJnlpWar {
 			addJ2se(new J2se());
 		}
 		//check required attributes in subelements
-		List icons=getIcons();
-		for (int i=0;i <icons.size(); i++){
-			Icon icon=(Icon)icons.get(i);
+		for (Icon icon : getIcons()){
 			if(icon.getFile()==null){
 				throw new BuildException("The file attribute of the icon element is required");
 			}

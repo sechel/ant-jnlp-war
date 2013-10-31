@@ -24,7 +24,7 @@ public class J2se extends DataType implements JnlpWarDataType {
 	
 	private String args;
 	private String minVersion="1.4";
-	private List properties=new ArrayList();
+	private List<J2seProperty> properties=new ArrayList<J2seProperty>();
 	//might want to support versions more fully in the future?
 	//private static final String[] versions={"1.1", "1.2", "1.3", "1.4", "1.5"};
 	private static final String[] minVersions={"1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7"};
@@ -105,7 +105,7 @@ public class J2se extends DataType implements JnlpWarDataType {
 	/**
 	 * @return Returns the properties.
 	 */
-	public List getProperties() {
+	public List<J2seProperty> getProperties() {
 		return properties;
 	}
 }
