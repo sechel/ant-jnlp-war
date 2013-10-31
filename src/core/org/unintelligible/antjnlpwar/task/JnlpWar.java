@@ -280,6 +280,7 @@ public class JnlpWar extends BaseJnlpWar {
 			signJarTask.setStorepass(getSignStorepass());
 			signJarTask.setJar(jarFiles[i]);
 			signJarTask.setAlias(getSignAlias());
+			signJarTask.setKeystore(getKeystore());
 			signJarTask.execute();
 			jarFiles[i].setLastModified(lastModified);
 		}

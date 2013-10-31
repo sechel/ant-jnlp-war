@@ -77,8 +77,8 @@
     #end
     #foreach($extension in $task.expandedExtensions)
         <extension name="${extension.name}" href="${extension.jnlpName}"></extension>
-    </resources>
     #end
+    </resources>
     #foreach($jar in $task.expandedNativeLibs)
     <resources #if($jar.os) os="${jar.os}" #end>
         <nativelib href="nativelib/${jar}"/>
@@ -89,7 +89,7 @@
         #foreach($arg in $task.application.mainclassargs)
             <argument>$arg</argument>
         #end
-    </application>
+    </application-desc>
     ###else
     ##    <application-desc main-class="${task.application.mainclass}"/>
     ###end

@@ -84,6 +84,8 @@ public abstract class BaseJnlpWar extends Task {
 	private String signStorepass;
 	
 	private String signAlias;
+	
+	private String keystore;
 
 	//task sub-elements
 	private List descriptions = new ArrayList();
@@ -504,6 +506,14 @@ public abstract class BaseJnlpWar extends Task {
         this.signKeystore = signKeystore;
     }
 
+    
+    public String getKeystore() {
+		return keystore;
+	}
+    
+    public void setKeystore(String keystore) {
+		this.keystore = keystore;
+	}
 	
 
 	

@@ -8,6 +8,7 @@ package org.unintelligible.antjnlpwar.datatype;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.tools.ant.types.DataType;
@@ -62,11 +63,13 @@ public class Application extends DataType implements JnlpWarDataType {
 	 * @see org.unintelligible.antjnlpwar.datatype.JnlpWarDataType#getJnlpVersion()
 	 */
 	public double getJnlpVersion() {
-		// TODO Auto-generated method stub
 		return JnlpWar.JNLP_VERSION_10;
 	}
         
-        public List getMainclassargs() {
-            return Arrays.asList(arguments.split(" "));
-        }
+    public List<String> getMainclassargs() {
+    	if (arguments == null) {
+    		return Collections.emptyList();
+    	}
+        return Arrays.asList(arguments.split(" "));
+    }
 }
