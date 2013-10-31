@@ -35,8 +35,10 @@ package org.unintelligible.antjnlpwar.task;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -101,10 +103,14 @@ public abstract class BaseJnlpWar extends Task {
 	private List nativeLibs = new ArrayList();
 	
 	protected List expandedNativeLibs=new ArrayList();
+	
+	protected Map<String, String>
+		nativeJarOsMap = new HashMap<String, String>(),
+		nativeJarArchMap = new HashMap<String, String>();
 
-       	private List extensions = new ArrayList();
-        
-        protected List expandedExtensions = new ArrayList();
+   	private List extensions = new ArrayList();
+    
+    protected List expandedExtensions = new ArrayList();
         
 	private List j2ses = new ArrayList();
 
@@ -515,6 +521,11 @@ public abstract class BaseJnlpWar extends Task {
 		this.keystore = keystore;
 	}
 	
-
+    public String getOs(String jar) {
+    	return nativeJarOsMap.get(jar);
+    }
+    public String getArch(String jar) {
+    	return nativeJarArchMap.get(jar);
+    }
 	
 }

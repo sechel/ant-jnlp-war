@@ -17,11 +17,13 @@ import org.apache.tools.ant.FileScanner;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.taskdefs.SignJar;
+import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Description;
 import org.unintelligible.antjnlpwar.datatype.Extension;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
+import org.unintelligible.antjnlpwar.datatype.NativeLib;
 import org.unintelligible.antjnlpwar.generation.Generator;
 import org.unintelligible.antjnlpwar.task.support.ExtensionLib;
 import org.unintelligible.antjnlpwar.util.StreamUtil;
@@ -116,7 +118,10 @@ public class JnlpWar extends BaseJnlpWar {
 			
 			//native libs -> application/nativelib folder
 			for(Iterator it=getNativeLibs().iterator(); it.hasNext();){
-				FileScanner scanner=((ZipFileSet)it.next()).getDirectoryScanner(getProject());
+				NativeLib nl = ((NativeLib)it.next());
+				String os = nl.getOs() == null ? "" : nl.getOs();
+				String arch = nl.getArch() == null ? "" : nl.getArch();
+				FileScanner scanner = nl.getDirectoryScanner(getProject());
 				String[] includedJars=scanner.getIncludedFiles();
 				File basedir=scanner.getBasedir();
 				for(int i=0; i<includedJars.length;i++){
@@ -124,19 +129,26 @@ public class JnlpWar extends BaseJnlpWar {
 					File nativeLib=new File(basedir, includedJars[i]);
 					if(!includedJars[i].endsWith(".jar")){
 						log("Creating a jar file for native lib "+includedJars[i]);
-						File nativeLibJar=new File(applicationNativeLibFolder, includedJars[i]+".jar");
-						Jar jarTask=new Jar();
-						jarTask.setDestFile(nativeLib);
+						String osFile = os.replace(" ", "").replace("\\", "");
+						String archFile = arch.replace(" ", "").replace("\\", "");
+						File nativeLibJar=new File(applicationNativeLibFolder, includedJars[i] + "-" + osFile + "-" + archFile + ".jar");
+						Zip jarTask=new Zip();
+						jarTask.setProject(getProject());
+						jarTask.setDestFile(nativeLibJar);
 						jarTask.setBasedir(basedir);
 						jarTask.setIncludes(includedJars[i]);
 						jarTask.execute();
 						//preserve datetime for versioning
 						nativeLibJar.setLastModified(nativeLib.lastModified());
 						expandedNativeLibs.add(nativeLibJar.getName());
+						nativeJarOsMap.put(nativeLibJar.getName(), os);
+						nativeJarArchMap.put(nativeLibJar.getName(), arch);
 					} else {
 						log("Copying native lib "+includedJars[i]);
 						StreamUtil.copyFile(nativeLib, applicationNativeLibFolder);
 						expandedNativeLibs.add(nativeLib.getName());
+						nativeJarOsMap.put(nativeLib.getName(), os);
+						nativeJarArchMap.put(nativeLib.getName(), arch);
 					}
 				}
 			}
@@ -169,6 +181,8 @@ public class JnlpWar extends BaseJnlpWar {
 			//template generation
 			//
 			//generate the JNLP deployment file
+			log("os " + nativeJarOsMap);
+			log("arch " + nativeJarArchMap);
 			File jnlpOutputFile = new File(applicationFolder, "launch.jnlp");
 			Generator jnlpGenerator = new Generator(this, jnlpOutputFile,
 					"org/unintelligible/antjnlpwar/template/jnlp.vm");

@@ -30,6 +30,9 @@ public class StreamUtil {
 		try {
 			File destFile = new File(destFolder, srcFile.getName());
 			if (destFile.exists()) {
+				if (srcFile.lastModified() == destFile.lastModified() && srcFile.length() == destFile.length()) {
+					return;
+				}
 				throw new BuildException("Could not copy " + srcFile + " to "
 						+ destFolder + " as " + destFile + " already exists");
 			}

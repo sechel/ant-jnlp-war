@@ -80,7 +80,9 @@
     #end
     </resources>
     #foreach($jar in $task.expandedNativeLibs)
-    <resources #if($jar.os) os="${jar.os}" #end>
+    #set( $os = $task.getOs($jar) )
+    #set( $arch = $task.getArch($jar) )
+    <resources #if($os)os="${os}"#end #if($arch)arch="${arch}"#end>
         <nativelib href="nativelib/${jar}"/>
     </resources>
     #end

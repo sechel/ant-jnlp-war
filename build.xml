@@ -22,7 +22,8 @@
 	</target>
 
 	<target name="compile" depends="init" description="compile the source" >
-		<javac srcdir="${src}" nowarn="true" destdir="${build}"  target="1.4" source="1.4">
+		<javac srcdir="${src}" nowarn="true" destdir="${build}"  target="1.5" source="1.5" includeantruntime="false">
+			<compilerarg value="-Xlint:unchecked"/>
 			<classpath refid="classpath"/>
 		</javac>
 	</target>

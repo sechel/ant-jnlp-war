@@ -11,19 +11,22 @@ import org.apache.tools.ant.types.ZipFileSet;
  *
  */
 public class NativeLib extends ZipFileSet {
-	private String os;
 	
-
-	/**
-	 * @return Returns the os.
-	 */
+	private String os;
+	private String arch;
+	
 	public String getOs() {
 		return os;
 	}
-	/**
-	 * @param os The os to set.
-	 */
 	public void setOs(String os) {
 		this.os = os;
 	}
+	
+	public String getArch() {
+		return arch;
+	}
+	public void setArch(String arch) {
+		this.arch = arch;
+	}
+	
 }
