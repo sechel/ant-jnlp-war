@@ -304,9 +304,6 @@ public class JnlpWar extends BaseJnlpWar {
 		if (getTofile() == null) {
 			throw new BuildException("The tofile parameter is required");
 		}
-		if (getCodebase() == null) {
-			throw new BuildException("The codebase parameter is required");
-		}
 		if (getApplication() == null) {
 			throw new BuildException("The application element is required");
 		}

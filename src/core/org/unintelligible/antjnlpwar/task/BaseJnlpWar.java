@@ -67,6 +67,8 @@ public abstract class BaseJnlpWar extends Task {
 	//task properties
 	private File tofile;
 
+	private boolean attemptJavaDetection = false;
+	
 	private boolean offlineallowed = true;
 
 	private boolean allpermissions = true;
@@ -527,5 +529,12 @@ public abstract class BaseJnlpWar extends Task {
     public String getArch(String jar) {
     	return nativeJarArchMap.get(jar);
     }
+    
+    public boolean isAttemptJavaDetection() {
+		return attemptJavaDetection;
+	}
+    public void setAttemptJavaDetection(boolean attemptJavaDetection) {
+		this.attemptJavaDetection = attemptJavaDetection;
+	}
 	
 }

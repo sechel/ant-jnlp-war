@@ -57,7 +57,9 @@
     			</script>
 			#else
 				##launch the JNLP file without attempting Java detection
-				document.location='./application/launch.jnlp';
+				<script type="text/javascript">
+					document.location='./application/launch.jnlp';
+				</script>
 			#end
 		</head>
 		<body>
