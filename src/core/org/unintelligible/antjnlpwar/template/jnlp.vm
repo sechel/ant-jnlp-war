@@ -14,7 +14,7 @@
         <title>${task.title}</title>
         <vendor>${task.vendor}</vendor>
     #if( $task.homepage )
-        <homepage href="docs/help.html"/>
+        <homepage href="${task.homepage}"/>
     #end
     #foreach( $description in $task.descriptions )
         <description #if( $description.kind ) kind="${description.kind}" #end>${description.text}</description>
@@ -23,7 +23,7 @@
     ##NEED ICON HREF
         <icon #if( $icon.kind ) kind="${icon.kind}" #end href="icon/${icon.file.name}"/>
     #end
-    #if( $task.offlineAllowed )
+    #if( $task.offlineallowed )
         <offline-allowed/> 
     #end
     ##NEED ASSOCIATIONS

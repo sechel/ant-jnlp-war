@@ -19,13 +19,10 @@ import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.taskdefs.SignJar;
 import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.ZipFileSet;
-import org.unintelligible.antjnlpwar.datatype.Description;
-import org.unintelligible.antjnlpwar.datatype.Extension;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.datatype.NativeLib;
 import org.unintelligible.antjnlpwar.generation.Generator;
-import org.unintelligible.antjnlpwar.task.support.ExtensionLib;
 import org.unintelligible.antjnlpwar.util.StreamUtil;
 
 import com.sun.tools.apache.ant.pack200.Pack200Task;
@@ -66,8 +63,7 @@ public class JnlpWar extends BaseJnlpWar {
 	 */
 	public void execute() {
 		verifyInput();
-		log("Vendor=" + getVendor() + ", description="
-				+ ((Description) getDescriptions().get(0)).getDescription());
+		log("Vendor=" + getVendor());
 		//create a folder in the temp dir
 		File tempFolder = new File(System.getProperty("java.io.tmpdir"));
 		if (!tempFolder.canWrite()) {
@@ -79,7 +75,6 @@ public class JnlpWar extends BaseJnlpWar {
 		File rootFolder = createFolder(tempFolder, "jnlpWarTmp_"
 				+ System.currentTimeMillis());
 		log("created rootfolder: " + rootFolder);
-		
 		
 		try {
 			File applicationFolder = createFolder(rootFolder, "application");
@@ -171,6 +166,7 @@ public class JnlpWar extends BaseJnlpWar {
 				signJars(applicationFolder);
 				signJars(applicationNativeLibFolder);
 			}
+			
 			//if pack200, pack the files
 			if(isPack200()){
 				log("packing jars");
