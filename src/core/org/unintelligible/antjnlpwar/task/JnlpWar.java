@@ -249,8 +249,6 @@ public class JnlpWar extends BaseJnlpWar {
 	
 	private void writeManifestAttributes(Manifest mf, File jar) {
 		if (mf == null) return;
-		System.out.println("exists: " + jar + ": " + jar.exists());
-		System.out.println("manifest: " + mf);
 		Jar jarTask = new Jar();
 		try {
 			jarTask.addConfiguredManifest(mf);
