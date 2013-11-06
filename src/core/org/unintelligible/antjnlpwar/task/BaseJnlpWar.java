@@ -41,6 +41,9 @@ import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.taskdefs.Manifest;
+import org.apache.tools.ant.taskdefs.ManifestException;
+import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Application;
 import org.unintelligible.antjnlpwar.datatype.Association;
 import org.unintelligible.antjnlpwar.datatype.Description;
@@ -49,7 +52,6 @@ import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.datatype.NativeLib;
 import org.unintelligible.antjnlpwar.datatype.Shortcut;
-import org.unintelligible.antjnlpwar.datatype.WebstartLib;
 
 /**
  * @author ngc
@@ -97,7 +99,7 @@ public abstract class BaseJnlpWar extends Task {
 
 	private Shortcut shortcut;
 
-	private List<WebstartLib> libraries = new ArrayList<WebstartLib>();
+	private List<ZipFileSet> libraries = new ArrayList<ZipFileSet>();
 	
 	protected List<String> expandedLibs=new ArrayList<String>();
 
@@ -119,6 +121,19 @@ public abstract class BaseJnlpWar extends Task {
 	
 	private Application application;
 
+	private Manifest
+		manifestUpdate = new Manifest();
+	
+	public void addConfiguredManifest(Manifest newManifest) throws ManifestException {
+	    manifestUpdate.merge(newManifest, false);
+	}
+	public Manifest getManifest() {
+		return manifestUpdate;
+	}
+	public Manifest createManifest() {
+		return new Manifest();
+	}
+	
 	/*
 	 * Getters and setters for public properties
 	 */
@@ -350,7 +365,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * 
 	 * @param fs
 	 */
-	public void addLibrary(WebstartLib fs) {
+	public void addLib(ZipFileSet fs) {
 		libraries.add(fs);
 	}
 
@@ -418,7 +433,7 @@ public abstract class BaseJnlpWar extends Task {
 	/**
 	 * @return Returns the libs.
 	 */
-	protected List<WebstartLib> getLibraries() {
+	protected List<ZipFileSet> getLibraries() {
 		return libraries;
 	}
 	

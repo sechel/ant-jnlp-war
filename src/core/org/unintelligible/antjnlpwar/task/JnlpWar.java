@@ -17,11 +17,10 @@ import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.taskdefs.Manifest;
 import org.apache.tools.ant.taskdefs.ManifestException;
 import org.apache.tools.ant.taskdefs.SignJar;
-import org.apache.tools.ant.taskdefs.Zip;
+import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
 import org.unintelligible.antjnlpwar.datatype.NativeLib;
-import org.unintelligible.antjnlpwar.datatype.WebstartLib;
 import org.unintelligible.antjnlpwar.generation.Generator;
 import org.unintelligible.antjnlpwar.util.StreamUtil;
 
@@ -94,21 +93,22 @@ public class JnlpWar extends BaseJnlpWar {
 					webinflibFolder);
 
 			//jars -> application folder
-			for(WebstartLib lib : getLibraries()){
+			for(ZipFileSet lib : getLibraries()){
 				FileScanner scanner = lib.getDirectoryScanner(getProject());
 				String[] includedJars=scanner.getIncludedFiles();
 				File basedir=scanner.getBasedir();
 				for(String jarName : includedJars){
 					File jar = new File(basedir, jarName);
-					File copiedJar = new File(applicationFolder, jarName);
-					log("copying jar " + jar);
+					File copiedJar = new File(applicationFolder, jar.getName());
 					StreamUtil.copyFile(jar, applicationFolder);
-					writeManifestAttributes(lib.getManifest(), copiedJar);
+					writeManifestAttributes(getManifest(), copiedJar);
 					expandedLibs.add(jar.getName());
 				}
 			}
 			//main jar -> application folder
 			StreamUtil.copyFile(getApplication().getJar(), applicationFolder);
+			File mainJar = new File(applicationFolder, getApplication().getJar().getName());
+			writeManifestAttributes(getManifest(), mainJar);
 			
 			//native libs -> application/nativelib folder
 			for(NativeLib nl : getNativeLibs()){
@@ -125,11 +125,12 @@ public class JnlpWar extends BaseJnlpWar {
 						String osFile = os.replace(" ", "").replace("\\", "");
 						String archFile = arch.replace(" ", "").replace("\\", "");
 						File nativeLibJar=new File(applicationNativeLibFolder, includedJars[i] + "-" + osFile + "-" + archFile + ".jar");
-						Zip jarTask=new Zip();
+						Jar jarTask=new Jar();
 						jarTask.setProject(getProject());
 						jarTask.setDestFile(nativeLibJar);
 						jarTask.setBasedir(basedir);
 						jarTask.setIncludes(includedJars[i]);
+						jarTask.addConfiguredManifest(getManifest());
 						jarTask.execute();
 						//preserve datetime for versioning
 						nativeLibJar.setLastModified(nativeLib.lastModified());
@@ -139,6 +140,8 @@ public class JnlpWar extends BaseJnlpWar {
 					} else {
 						log("Copying native lib "+includedJars[i]);
 						StreamUtil.copyFile(nativeLib, applicationNativeLibFolder);
+						File copiedLib = new File(applicationNativeLibFolder, nativeLib.getName());
+						writeManifestAttributes(getManifest(), copiedLib);
 						expandedNativeLibs.add(nativeLib.getName());
 						nativeJarOsMap.put(nativeLib.getName(), os);
 						nativeJarArchMap.put(nativeLib.getName(), arch);
@@ -245,13 +248,18 @@ public class JnlpWar extends BaseJnlpWar {
 
 	
 	private void writeManifestAttributes(Manifest mf, File jar) {
+		if (mf == null) return;
+		System.out.println("exists: " + jar + ": " + jar.exists());
+		System.out.println("manifest: " + mf);
 		Jar jarTask = new Jar();
 		try {
 			jarTask.addConfiguredManifest(mf);
 		} catch (ManifestException e) {
 			e.printStackTrace();
 		}
+		jarTask.setProject(getProject());
 		jarTask.setDestFile(jar);
+		jarTask.setTaskName("manifest update");
 		jarTask.setUpdate(true);
 		jarTask.execute();
 	}
