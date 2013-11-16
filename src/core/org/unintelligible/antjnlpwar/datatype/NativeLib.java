@@ -5,6 +5,7 @@ package org.unintelligible.antjnlpwar.datatype;
 
 import org.apache.tools.ant.types.ZipFileSet;
 
+
 /**
  * An extension of the ZipFileSet allowing users to specify which OS a particular JNLP NativeLib applies to.
  * @author ngc

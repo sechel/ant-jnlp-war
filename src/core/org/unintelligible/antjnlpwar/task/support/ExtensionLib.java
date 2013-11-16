@@ -20,7 +20,7 @@ import org.unintelligible.antjnlpwar.task.BaseJnlpWar;
  */
 public class ExtensionLib extends Extension {
     private BaseJnlpWar task;
-    private List jars = new ArrayList();
+    private List<String> jars = new ArrayList<String>();
     /** Creates a new instance of ExtensionLib */
     public ExtensionLib(BaseJnlpWar task, Extension ext) {
         this.task = task;
@@ -37,7 +37,7 @@ public class ExtensionLib extends Extension {
         jars.add(jar);
     }
     
-    public List getJars() {
+    public List<String> getJars() {
         return jars;
     }
     

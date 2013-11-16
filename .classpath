@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/core"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/build/ant.jar"/>
+	<classpathentry kind="lib" path="lib/build/ant.jar" sourcepath="/apache-ant"/>
 	<classpathentry kind="lib" path="lib/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/logkit-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/Pack200Task.jar"/>

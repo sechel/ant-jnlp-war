@@ -36,12 +36,13 @@ package org.unintelligible.antjnlpwar.task;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.taskdefs.Manifest;
+import org.apache.tools.ant.taskdefs.ManifestException;
 import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Application;
 import org.unintelligible.antjnlpwar.datatype.Association;
@@ -92,34 +93,47 @@ public abstract class BaseJnlpWar extends Task {
 	private String keystore;
 
 	//task sub-elements
-	private List descriptions = new ArrayList();
+	private List<Description> descriptions = new ArrayList<Description>();
 
-	private List icons = new ArrayList();
+	private List<Icon> icons = new ArrayList<Icon>();
 
 	private Shortcut shortcut;
 
-	private List libs = new ArrayList();
+	private List<ZipFileSet> libraries = new ArrayList<ZipFileSet>();
 	
-	protected List expandedLibs=new ArrayList();
+	protected List<String> expandedLibs=new ArrayList<String>();
 
-	private List nativeLibs = new ArrayList();
+	private List<NativeLib> nativeLibs = new ArrayList<NativeLib>();
 	
-	protected List expandedNativeLibs=new ArrayList();
+	protected List<String> expandedNativeLibs=new ArrayList<String>();
 	
 	protected Map<String, String>
 		nativeJarOsMap = new HashMap<String, String>(),
 		nativeJarArchMap = new HashMap<String, String>();
 
-   	private List extensions = new ArrayList();
+   	private List<Extension> extensions = new ArrayList<Extension>();
     
-    protected List expandedExtensions = new ArrayList();
+    protected List<String> expandedExtensions = new ArrayList<String>();
         
-	private List j2ses = new ArrayList();
+	private List<J2se> j2ses = new ArrayList<J2se>();
 
 	private Association association;
 	
 	private Application application;
 
+	private Manifest
+		manifestUpdate = new Manifest();
+	
+	public void addConfiguredManifest(Manifest newManifest) throws ManifestException {
+	    manifestUpdate.merge(newManifest, false);
+	}
+	public Manifest getManifest() {
+		return manifestUpdate;
+	}
+	public Manifest createManifest() {
+		return new Manifest();
+	}
+	
 	/*
 	 * Getters and setters for public properties
 	 */
@@ -321,7 +335,7 @@ public abstract class BaseJnlpWar extends Task {
 	/**
 	 * @return Returns the descriptions.
 	 */
-	public List getDescriptions() {
+	public List<Description> getDescriptions() {
 		return descriptions;
 	}
 	/**
@@ -352,7 +366,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * @param fs
 	 */
 	public void addLib(ZipFileSet fs) {
-		libs.add(fs);
+		libraries.add(fs);
 	}
 
 	/**
@@ -388,14 +402,14 @@ public abstract class BaseJnlpWar extends Task {
 	 * 
 	 * @return
 	 */
-	public List getJ2ses() {
+	public List<J2se> getJ2ses() {
 		return j2ses;
 	}
 
 	/**
 	 * @return Returns the icons.
 	 */
-	public List getIcons() {
+	public List<Icon> getIcons() {
 		return icons;
 	}
 
@@ -407,8 +421,7 @@ public abstract class BaseJnlpWar extends Task {
 			return JNLP_VERSION_15;
 		}
 		//check each j2se element
-		for(Iterator it=j2ses.iterator(); it.hasNext(); ){
-			J2se j2se=(J2se)it.next();
+		for(J2se j2se : getJ2ses()){
 			if(j2se.getJnlpVersion()==JNLP_VERSION_15){
 				return JNLP_VERSION_15;
 			}
@@ -420,15 +433,15 @@ public abstract class BaseJnlpWar extends Task {
 	/**
 	 * @return Returns the libs.
 	 */
-	protected List getLibs() {
-		return libs;
+	protected List<ZipFileSet> getLibraries() {
+		return libraries;
 	}
 	
 	/**
 	 * Gets a list of String representing the filename of the jars for the application
 	 * @return
 	 */
-	public List getExpandedLibs(){
+	public List<String> getExpandedLibs(){
 		return expandedLibs;
 
 	}
@@ -436,7 +449,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * Gets a list of String representing the filename of the native libs (packed as jars) for the application
 	 * @return
 	 */
-	public List getExpandedNativeLibs(){
+	public List<String> getExpandedNativeLibs(){
 		return expandedNativeLibs;
 
 	}
@@ -444,7 +457,7 @@ public abstract class BaseJnlpWar extends Task {
 	/**
 	 * @return Returns the nativeLibs.
 	 */
-	public List getNativeLibs() {
+	public List<NativeLib> getNativeLibs() {
 		return nativeLibs;
 	}
 
@@ -452,7 +465,7 @@ public abstract class BaseJnlpWar extends Task {
 	 * Gets a list of String representing the filename of the extension libs (packed as jars) for the application
 	 * @return
 	 */
-	public List getExpandedExtensions(){
+	public List<String> getExpandedExtensions(){
 		return expandedExtensions;
 
 	}
@@ -460,7 +473,7 @@ public abstract class BaseJnlpWar extends Task {
 	/**
 	 * @return Returns the extension libs.
 	 */
-	public List getExtensions() {
+	public List<Extension> getExtensions() {
 		return extensions;
 	}
 

@@ -81,8 +81,9 @@ public class StreamUtil {
 		}
 		WritableByteChannel channel = null;
 		try {
-			//		 Obtain a channel
-			channel = new FileOutputStream(destFile).getChannel();
+			// Obtain a channel
+			FileOutputStream fos = new FileOutputStream(destFile);
+			channel = fos.getChannel();
 			// Create a direct ByteBuffer;
 			// see also e158 Creating a ByteBuffer
 			ByteBuffer buf = ByteBuffer.allocateDirect(10);
@@ -106,7 +107,7 @@ public class StreamUtil {
 				buf.flip();
 
 				// Write the bytes to the channel
-				int numWritten = channel.write(buf);
+				channel.write(buf);
 
 				// Check if all bytes were written
 				if (buf.hasRemaining()) {
@@ -121,7 +122,7 @@ public class StreamUtil {
 			}
 
 			// Close the file
-			channel.close();
+			fos.close();
 		} catch (IOException ioe) {
 			throw new BuildException("Could not copy " + filename + " to "
 					+ destFolder + ": " + ioe, ioe);

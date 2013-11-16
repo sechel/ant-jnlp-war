@@ -9,15 +9,14 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Iterator;
-import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.FileScanner;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.taskdefs.Jar;
+import org.apache.tools.ant.taskdefs.Manifest;
+import org.apache.tools.ant.taskdefs.ManifestException;
 import org.apache.tools.ant.taskdefs.SignJar;
-import org.apache.tools.ant.taskdefs.Zip;
 import org.apache.tools.ant.types.ZipFileSet;
 import org.unintelligible.antjnlpwar.datatype.Icon;
 import org.unintelligible.antjnlpwar.datatype.J2se;
@@ -85,11 +84,8 @@ public class JnlpWar extends BaseJnlpWar {
 			//
 			//copy icons, jars etc.. to the relevant folders
 			//
-			for (Iterator it = getIcons().iterator(); it.hasNext();) {
-				//icons
-				Icon icon = (Icon) it.next();
+			for (Icon icon : getIcons()) {
 				StreamUtil.copyFile(icon.getFile(), iconFolder);
-
 			}
 			//jndc servlet -> web-inf/lib folder
 			StreamUtil.copyFile("jnlp-servlet.jar", this.getClass().getClassLoader().getResourceAsStream(
@@ -97,23 +93,25 @@ public class JnlpWar extends BaseJnlpWar {
 					webinflibFolder);
 
 			//jars -> application folder
-			for(Iterator it=getLibs().iterator(); it.hasNext();){
-				FileScanner scanner=((ZipFileSet)it.next()).getDirectoryScanner(getProject());
+			for(ZipFileSet lib : getLibraries()){
+				FileScanner scanner = lib.getDirectoryScanner(getProject());
 				String[] includedJars=scanner.getIncludedFiles();
 				File basedir=scanner.getBasedir();
-				for(int i=0; i<includedJars.length;i++){
-					File jar=new File(basedir, includedJars[i]);
-					log("copying jar "+jar);
+				for(String jarName : includedJars){
+					File jar = new File(basedir, jarName);
+					File copiedJar = new File(applicationFolder, jar.getName());
 					StreamUtil.copyFile(jar, applicationFolder);
+					writeManifestAttributes(getManifest(), copiedJar);
 					expandedLibs.add(jar.getName());
 				}
 			}
 			//main jar -> application folder
 			StreamUtil.copyFile(getApplication().getJar(), applicationFolder);
+			File mainJar = new File(applicationFolder, getApplication().getJar().getName());
+			writeManifestAttributes(getManifest(), mainJar);
 			
 			//native libs -> application/nativelib folder
-			for(Iterator it=getNativeLibs().iterator(); it.hasNext();){
-				NativeLib nl = ((NativeLib)it.next());
+			for(NativeLib nl : getNativeLibs()){
 				String os = nl.getOs() == null ? "" : nl.getOs();
 				String arch = nl.getArch() == null ? "" : nl.getArch();
 				FileScanner scanner = nl.getDirectoryScanner(getProject());
@@ -127,11 +125,12 @@ public class JnlpWar extends BaseJnlpWar {
 						String osFile = os.replace(" ", "").replace("\\", "");
 						String archFile = arch.replace(" ", "").replace("\\", "");
 						File nativeLibJar=new File(applicationNativeLibFolder, includedJars[i] + "-" + osFile + "-" + archFile + ".jar");
-						Zip jarTask=new Zip();
+						Jar jarTask=new Jar();
 						jarTask.setProject(getProject());
 						jarTask.setDestFile(nativeLibJar);
 						jarTask.setBasedir(basedir);
 						jarTask.setIncludes(includedJars[i]);
+						jarTask.addConfiguredManifest(getManifest());
 						jarTask.execute();
 						//preserve datetime for versioning
 						nativeLibJar.setLastModified(nativeLib.lastModified());
@@ -141,6 +140,8 @@ public class JnlpWar extends BaseJnlpWar {
 					} else {
 						log("Copying native lib "+includedJars[i]);
 						StreamUtil.copyFile(nativeLib, applicationNativeLibFolder);
+						File copiedLib = new File(applicationNativeLibFolder, nativeLib.getName());
+						writeManifestAttributes(getManifest(), copiedLib);
 						expandedNativeLibs.add(nativeLib.getName());
 						nativeJarOsMap.put(nativeLib.getName(), os);
 						nativeJarArchMap.put(nativeLib.getName(), arch);
@@ -244,6 +245,23 @@ public class JnlpWar extends BaseJnlpWar {
 			
 		}
 	}
+
+	
+	private void writeManifestAttributes(Manifest mf, File jar) {
+		if (mf == null) return;
+		Jar jarTask = new Jar();
+		try {
+			jarTask.addConfiguredManifest(mf);
+		} catch (ManifestException e) {
+			e.printStackTrace();
+		}
+		jarTask.setProject(getProject());
+		jarTask.setDestFile(jar);
+		jarTask.setTaskName("manifest update");
+		jarTask.setUpdate(true);
+		jarTask.execute();
+	}
+	
 	private void packJars(File folder){
 		log("packJars for "+folder);
 		Pack200Task packTask;
@@ -307,9 +325,7 @@ public class JnlpWar extends BaseJnlpWar {
 			addJ2se(new J2se());
 		}
 		//check required attributes in subelements
-		List icons=getIcons();
-		for (int i=0;i <icons.size(); i++){
-			Icon icon=(Icon)icons.get(i);
+		for (Icon icon : getIcons()){
 			if(icon.getFile()==null){
 				throw new BuildException("The file attribute of the icon element is required");
 			}
